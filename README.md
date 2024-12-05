@@ -8,6 +8,128 @@ cd original-repo
 git remote rename origin upstream
 git remote add origin https://github.com/your-username/new-repo.git
 
+git fetch upstream
+
+git merge upstream/main
+
+# Syncing a Forked Repository with Upstream Updates
+
+This guide outlines the steps to maintain your forked repository while still incorporating updates from the original repository (referred to as "upstream"). This allows you to work independently while synchronizing updates when necessary.
+
+---
+
+## Prerequisites
+Ensure you have Git installed and your forked repository cloned locally.
+
+---
+
+## Steps
+
+### 1. **Add the Upstream Remote**
+You need to add the original repository (upstream) as a remote.
+
+```bash
+# Navigate to your local repository
+cd /path/to/your/repo
+
+# Add the upstream remote
+# Replace <original-repo-url> with the original repository's URL
+git remote add upstream <original-repo-url>
+```
+
+### 2. **Verify the Remotes**
+Ensure both `origin` (your fork) and `upstream` (the original repository) are set up.
+
+```bash
+git remote -v
+```
+You should see output similar to:
+```
+origin    https://github.com/your-username/your-repo.git (fetch)
+origin    https://github.com/your-username/your-repo.git (push)
+upstream  https://github.com/original-username/original-repo.git (fetch)
+upstream  https://github.com/original-username/original-repo.git (push)
+```
+
+### 3. **Fetch Updates from Upstream**
+Pull in the changes from the upstream repository without merging.
+
+```bash
+git fetch upstream
+```
+This fetches all branches from the upstream repository.
+
+### 4. **Merge Upstream Changes**
+Merge the changes from the upstream branch (e.g., `main`) into your local branch.
+
+```bash
+# Merge upstream changes into your local branch
+git merge upstream/main --allow-unrelated-histories
+```
+The `--allow-unrelated-histories` flag is required if the histories of `origin` and `upstream` are unrelated.
+
+### 5. **Resolve Merge Conflicts (If Any)**
+If there are merge conflicts, Git will pause the merge and prompt you to resolve them. Use your text editor or IDE to resolve the conflicts.
+
+After resolving the conflicts:
+
+```bash
+# Stage the resolved files
+git add .
+
+# Complete the merge
+git commit -m "Merged upstream changes"
+```
+
+### 6. **Push the Changes to Your Fork**
+Finally, push the merged changes to your fork (origin).
+
+```bash
+git push origin main
+```
+
+---
+
+## Optional: **Rebase Instead of Merge**
+If you prefer a linear history, you can rebase your changes on top of the upstream branch:
+
+```bash
+# Fetch upstream changes
+git fetch upstream
+
+# Rebase your branch onto upstream
+git rebase upstream/main
+
+# Push the rebased changes (force push is required)
+git push origin main --force
+```
+
+---
+
+## Automating the Process
+For convenience, you can create a script to automate the synchronization process:
+
+```bash
+#!/bin/bash
+# Sync script for forked repository
+
+git fetch upstream
+git merge upstream/main --allow-unrelated-histories
+
+echo "Successfully synced with upstream."
+```
+Save this script (e.g., as `sync.sh`) and run it whenever you need to update your fork.
+
+```bash
+bash sync.sh
+```
+
+---
+
+By following this guide, you can maintain a forked repository that stays updated with the original project while preserving your own changes.
+
+
+
 CoreUI is meant to be the UX game changer. Pure & transparent code is devoid of redundant components, so the app is light enough to offer ultimate user experience. This means mobile devices also, where the navigation is just as easy and intuitive as on a desktop or laptop. The CoreUI Layout API lets you customize your project for almost any device – be it Mobile, Web or WebApp – CoreUI covers them all!
 
 ## Table of Contents
