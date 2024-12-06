@@ -25,6 +25,7 @@ import {
 import CIcon from '@coreui/icons-react'
 
 import avatar8 from 'src/assets/images/avatars/8.jpg'
+import {Link} from "react-router-dom";
 
 const AppHeaderDropdown = () => {
   const { t } = useTranslation()
@@ -68,9 +69,11 @@ const AppHeaderDropdown = () => {
         <CDropdownHeader className="bg-body-secondary text-body-secondary fw-semibold my-2">
           {t('settings')}
         </CDropdownHeader>
-        <CDropdownItem href="#">
-          <CIcon icon={cilUser} className="me-2" />
-          {t('profile')}
+        <CDropdownItem>
+          <Link to={'/userProfile'}>
+            <CIcon icon={cilUser} className="me-2" />
+            {t('profile')}
+          </Link>
         </CDropdownItem>
         <CDropdownItem href="#">
           <CIcon icon={cilSettings} className="me-2" />
